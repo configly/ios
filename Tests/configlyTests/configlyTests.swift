@@ -8,6 +8,11 @@ func counter(e: XCTestExpectation) {
         e.fulfill()
     }
 }
+struct CustomObject: Decodable {
+    var currency: String
+    var amount: Int
+    var items: [String]
+}
 
 final class configlyTests: XCTestCase {
 
@@ -95,6 +100,16 @@ final class configlyTests: XCTestCase {
 
         client.stringDictionary(forKey: "color_styles") { (error, value) -> () in
             print(String(format:"Worked! %@ -> \(value!)", "best_videogames"))
+            expectation.fulfill();
+        };
+        wait(for: [expectation], timeout: 5.0)
+    }
+    func testGetCustomObject() {
+        let expectation = XCTestExpectation(description: "Download apple.com home page")
+        let client = CNGClient.setup(withApiKey: "Dem0apiKEY");
+
+        client.object(forKey: "pricing_info") { (error, value: CustomObject?) -> () in
+            print(String(format:"Worked! %@ -> \(value!)", "pricing_info"))
             expectation.fulfill();
         };
         wait(for: [expectation], timeout: 5.0)

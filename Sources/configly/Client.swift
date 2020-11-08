@@ -114,13 +114,13 @@ class CNGClient {
     }
 
     public func stringArray(forKey: String, callback: @escaping CNGCallback<[String]>) {
-
         httpRequestForGetKey(forKey: forKey, callback: callback);
     }
     public func stringDictionary(forKey: String, callback: @escaping CNGCallback<[String:String]>) {
         httpRequestForGetKey(forKey: forKey, callback: callback);
     }
-    public func rawJsonString(forKey: String, callback: ((_: String) -> Void)) {
+    public func object<T>(forKey: String, callback: @escaping CNGCallback<T>) where T: Decodable {
+        httpRequestForGetKey(forKey: forKey, callback: callback);
 
     }
 }
