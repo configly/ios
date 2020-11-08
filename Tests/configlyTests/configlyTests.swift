@@ -106,6 +106,20 @@ final class configlyTests: XCTestCase {
         wait(for: [expectation], timeout: 5.0)
     }
     
+    func testCachingGetString() {
+        let expectation = XCTestExpectation(description: "Download apple.com home page")
+        client.string(forKey: "marketing_splash") { (error, value) -> () in
+             print(String(format:"Worked! %@ -> %@", "marketing_splash", value ?? "none"))
+            sleep(0)
+            self.client.string(forKey: "marketing_splash") { (error, value) -> () in
+                print(String(format:"2 Worked! %@ -> %@", "marketing_splash", value ?? "none"))
+                expectation.fulfill();
+
+            }
+        }
+
+        wait(for: [expectation], timeout: 10.0)
+    }
     static var allTests = [
         ("testGetNonExistingKey", testGetNonExistingKey),
         ("testGetString", testGetString),
