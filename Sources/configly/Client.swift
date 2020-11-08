@@ -7,11 +7,11 @@
 import Foundation
 
 struct CNGOptions {
-    var baseUrlHost = "api.config.ly"
-    var baseUrlScheme = "https"
+    var baseHostUrl = URL(string:"https://api.config.ly")!
     var timeout = 3000
     var disableCache = false
 }
+
 struct CNGError {
     var status: String;
     var message: String;
@@ -19,14 +19,13 @@ struct CNGError {
 }
 
 typealias CNGCallback<T> = (CNGError?, T?) -> ()
-
 class CNGClient {
     private static var VERSION = "1.0"
 
     private var apiKey: String = "";
     private var baseUrlScheme: String = "";
 
-    private var baseUrlHost: String = "";
+    private var baseHostUrl: URL = URL(string:"https://api.config.ly")!;
     private var timeout: Int = 0;
     private var disableCache: Bool = false;
     private var initialized: Bool = false;
@@ -39,8 +38,7 @@ class CNGClient {
         CNGClient.instance.apiKey = withApiKey;
         CNGClient.instance.timeout = options.timeout
         CNGClient.instance.disableCache = options.disableCache
-        CNGClient.instance.baseUrlHost = options.baseUrlHost
-        CNGClient.instance.baseUrlScheme = options.baseUrlScheme
+        CNGClient.instance.baseHostUrl = options.baseHostUrl
         CNGClient.instance.initialized = true
 
         return CNGClient.instance;
@@ -52,9 +50,7 @@ class CNGClient {
 
     private func getRequestForGet(keys: [String]) -> URLRequest {
         // Construct URL
-        var components = URLComponents()
-        components.scheme = self.baseUrlScheme
-        components.host = self.baseUrlHost
+        var components = URLComponents(url: self.baseHostUrl, resolvingAgainstBaseURL: false)!
         components.path = "/api/v1/value"
         components.queryItems = keys.map { URLQueryItem(name: "keys[]", value: $0) }
 
@@ -79,7 +75,7 @@ class CNGClient {
                 return;
             }
             do {
-                print("DATA: %@", String(data: data, encoding:.utf8))
+                //print("DATA: %@", String(data: data, encoding:.utf8))
                 let keyValue: KeyValue = try JSONDecoder().decode(KeyValue<T>.self, from:data)
 
                 // Return nil if the value isn't found.

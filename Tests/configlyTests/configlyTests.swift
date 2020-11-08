@@ -15,10 +15,16 @@ struct CustomObject: Decodable {
 }
 
 final class configlyTests: XCTestCase {
+    let client = CNGClient.setup(withApiKey: "Dem0apiKEY", options: {
+        var opts = CNGOptions()
+        //opts.baseUrlScheme = "http"
+        //opts.baseUrlHost = "localhost:3000"
+        opts.baseHostUrl = URL(string:"http://localhost:3000")!
+        return opts
+    }());
 
     func testGetNonExistingKey() {
         let expectation = XCTestExpectation(description: "Download apple.com home page")
-        let client = CNGClient.setup(withApiKey: "Dem0apiKEY");
 
         client.bool(forKey: "doesnt_exist") { (error, value) -> () in
             var output: String = "false"
@@ -36,9 +42,6 @@ final class configlyTests: XCTestCase {
 
     func testGetString() {
         let expectation = XCTestExpectation(description: "Download apple.com home page")
-        let client = CNGClient.setup(withApiKey: "Dem0apiKEY");
-
-
         client.string(forKey: "marketing_splash") { (error, value) -> () in
              print(String(format:"Worked! %@ -> %@", "marketing_splash", value ?? "none"))
             expectation.fulfill();
@@ -49,8 +52,6 @@ final class configlyTests: XCTestCase {
 
     func testGetBool() {
         let expectation = XCTestExpectation(description: "Download apple.com home page")
-        let client = CNGClient.setup(withApiKey: "Dem0apiKEY");
-
         client.bool(forKey: "should_i_eat_arepa") { (error, value) -> () in
             var output: String = "false"
             if (value != nil) {
@@ -66,8 +67,6 @@ final class configlyTests: XCTestCase {
 
     func testGetInt() {
         let expectation = XCTestExpectation(description: "Download apple.com home page")
-        let client = CNGClient.setup(withApiKey: "Dem0apiKEY");
-
         client.integer(forKey: "num_arepas_to_eat") { (error, value) -> () in
             print(String(format:"Worked! %@ -> \(value!)", "num_arepas_to_eat"))
             expectation.fulfill();
@@ -76,8 +75,6 @@ final class configlyTests: XCTestCase {
     }
     func testGetDouble() {
         let expectation = XCTestExpectation(description: "Download apple.com home page")
-        let client = CNGClient.setup(withApiKey: "Dem0apiKEY");
-
         client.double(forKey: "percent-eaten-pizza") { (error, value) -> () in
             print(String(format:"Worked! %@ -> \(value!)", "percent-eaten-pizza"))
             expectation.fulfill();
@@ -86,8 +83,6 @@ final class configlyTests: XCTestCase {
     }
     func testGetStringArray() {
         let expectation = XCTestExpectation(description: "Download apple.com home page")
-        let client = CNGClient.setup(withApiKey: "Dem0apiKEY");
-
         client.stringArray(forKey: "best_videogames") { (error, value) -> () in
             print(String(format:"Worked! %@ -> \(value!)", "best_videogames"))
             expectation.fulfill();
@@ -96,8 +91,6 @@ final class configlyTests: XCTestCase {
     }
     func testGetStringDictionary() {
         let expectation = XCTestExpectation(description: "Download apple.com home page")
-        let client = CNGClient.setup(withApiKey: "Dem0apiKEY");
-
         client.stringDictionary(forKey: "color_styles") { (error, value) -> () in
             print(String(format:"Worked! %@ -> \(value!)", "best_videogames"))
             expectation.fulfill();
@@ -106,8 +99,6 @@ final class configlyTests: XCTestCase {
     }
     func testGetCustomObject() {
         let expectation = XCTestExpectation(description: "Download apple.com home page")
-        let client = CNGClient.setup(withApiKey: "Dem0apiKEY");
-
         client.object(forKey: "pricing_info") { (error, value: CustomObject?) -> () in
             print(String(format:"Worked! %@ -> \(value!)", "pricing_info"))
             expectation.fulfill();
