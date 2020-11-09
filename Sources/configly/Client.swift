@@ -7,15 +7,15 @@
 import Foundation
 
 public struct CNGOptions {
-    var baseHostUrl = URL(string:"https://api.config.ly")!
-    var timeout = 3000
-    var disableCache = false
+    public var baseHostUrl = URL(string:"https://api.config.ly")!
+    public var timeout = 3000
+    public var disableCache = false
 }
 
 public struct CNGError {
-    var status: String;
-    var message: String;
-    var originalError: Error?;
+    public var status: String;
+    public var message: String;
+    public var originalError: Error?;
 }
 
 public typealias CNGCallback<T> = (CNGError?, T?) -> ()
