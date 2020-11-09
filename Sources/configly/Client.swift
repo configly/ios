@@ -33,7 +33,7 @@ public class CNGClient {
     private static var instance: CNGClient = CNGClient();
 
 
-    public static func setup(withApiKey: String, options: CNGOptions?) -> CNGClient {
+    public static func setup(withApiKey: String, options: CNGOptions? = nil) -> CNGClient {
         var opts = options;
         if (options == nil) {
             opts = CNGOptions();
