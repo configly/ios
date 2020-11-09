@@ -6,20 +6,20 @@
 //
 import Foundation
 
-struct CNGOptions {
+public struct CNGOptions {
     var baseHostUrl = URL(string:"https://api.config.ly")!
     var timeout = 3000
     var disableCache = false
 }
 
-struct CNGError {
+public struct CNGError {
     var status: String;
     var message: String;
     var originalError: Error?;
 }
 
-typealias CNGCallback<T> = (CNGError?, T?) -> ()
-class CNGClient {
+public typealias CNGCallback<T> = (CNGError?, T?) -> ()
+public class CNGClient {
     private static var VERSION = "1.0"
 
     private var apiKey: String = "";
@@ -33,12 +33,15 @@ class CNGClient {
     private static var instance: CNGClient = CNGClient();
 
 
-    public static func setup(withApiKey: String, options: CNGOptions = CNGOptions()) -> CNGClient {
-
+    public static func setup(withApiKey: String, options: CNGOptions?) -> CNGClient {
+        var opts = options;
+        if (options == nil) {
+            opts = CNGOptions();
+        }
         CNGClient.instance.apiKey = withApiKey;
-        CNGClient.instance.timeout = options.timeout
-        CNGClient.instance.disableCache = options.disableCache
-        CNGClient.instance.baseHostUrl = options.baseHostUrl
+        CNGClient.instance.timeout = opts!.timeout
+        CNGClient.instance.disableCache = opts!.disableCache
+        CNGClient.instance.baseHostUrl = opts!.baseHostUrl
         CNGClient.instance.initialized = true
 
         return CNGClient.instance;
