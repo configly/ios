@@ -146,11 +146,11 @@ And place this code snippet in the execution path:
 ```swift
 let client = CNGClient.setup(withApiKey: "YOUR_API_KEY")
 client.stringArray(forKey: "greetings") { (error, value) -> () in
-  if value == nil {
-    print("We couldn't find that key. Did you create the 'greetings' Config as Step 2 demonstrates?")
-  } else {
-    print("Yay! A successful Config.ly integration!\n greetings -> \(value!)")
-  }
+  guard let value = value else {
+    print("Config.ly couldn't find that key. Did you create the 'greetings' Config as Step 2 of 'Getting Started' demonstrates?")
+    return
+  } 
+  print("Yay! A successful Config.ly integration!\n greetings -> \(value!)")
 };
 ```
 
