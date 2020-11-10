@@ -108,18 +108,18 @@ In four easy steps!
 
 ### 1. Get your API Key
 You'll need a [Configly](https://www.config.ly) account. Registration is lightning quick&mdash;you can register via
-visiting [https://www.config.ly/signup](https://www.config.ly/signup).
+visiting https://www.config.ly/signup .
 
-After signing up, you can grab your API Key from [https://www.config.ly/config](https://www.config.ly/config).
+After signing up, you can grab your API Key from https://www.config.ly/config .
 You'll need your API Key below to integrate the library into your app.
 
 ### 2. Create your first Config
-From [https://www.config.ly/config](https://www.config.ly/config), create a new Config via the "Add" button:
+From https://www.config.ly/config, create a new Config via the "Add" button:
 ![image](https://user-images.githubusercontent.com/184923/98487495-3b42ca80-21f1-11eb-9bfc-bfd429733362.png)
 
-Consider creating a simple SON Object or ArrayConfig called reetingsand give it the value of:
-hello', 'hola', '你好', 'नमस्ते']
-[https://www.config.ly/config](https://www.config.ly/config) should look like this:
+Consider creating a simple JSON Object or Array called `greetings` and  give it the value of:
+`[hello', 'hola', '你好', 'नमस्ते']`
+https://www.config.ly/config should look like this:
 
 ![image](https://user-images.githubusercontent.com/184923/98494454-09d6f880-220b-11eb-9ef7-36709ddc129f.png)
 
@@ -128,22 +128,29 @@ Be sure to save via clicking 'Send to Clients'. Now, we'll write client code to 
 ### 3. Install the client library (via Swift Package Manager)
 
 In your iOS project, go to `File -> Swift Packages -> Add Package Dependency...`, enter the
-Git repo URL: `github.com/configly/ios`.
+Github repo URL: `https://github.com/configly/ios`.
 
 ### 4. Fetch the Config
 Add the following code in the execution path. For simplicity, in an iOS app, you could add it to
 `AppDelegate : func application(UIApplication, [UIApplication.LaunchOptionsKey: Any]?) -> Bool`.
 
+Place this import at the top of the file in which you'll call the Configly library.
+```swift
+import configly
+```
 
+
+And place this code snippet in the execution path:
+> **Be sure to substitute your own API KEY**
 ```swift
 let client = CNGClient.setup(withApiKey: "YOUR_API_KEY")
 client.stringArray(forKey: "greetings") { (error, value) -> () in
-  print(String(format:"Worked! %@ -> \(value!)"), "greetings")
+  print(String(format:"Yay! A successful Config.ly integration!\n greetings -> \(value!)"))
 };
 ```
 
 Execute the project and you should see the payload printed! Try changing
-some values on [https://www.config.ly/config](https://www.config.ly/config) to confirm that
+some values on https://www.config.ly/config to confirm that
 the client is getting the updates.
 
 Congratulations you have Configly working end-to-end! Now, feel free to use Configly with all your projects!
