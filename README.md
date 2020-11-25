@@ -150,7 +150,7 @@ client.stringArray(forKey: "greetings") { (error, value) -> () in
     print("Config.ly couldn't find that key. Did you create the 'greetings' Config as Step 2 of 'Getting Started' demonstrates?")
     return
   } 
-  print("Yay! A successful Config.ly integration!\n greetings -> \(value!)")
+  print("Yay! A successful Config.ly integration!\n greetings -> \(value)")
 };
 ```
 
