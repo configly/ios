@@ -184,7 +184,7 @@ sp_copy:
 ```
 
 Now, based on the language of the user, you can fetch the proper translation:
-```
+```swift
     func setCopy(callback: (String, String, String) -> ()) {
         CNGClient.setup(withApiKey: "Dem0apiKEY")
         let copyKey = userSpeaksSpanish() ? "es_copy" : "en_copy"
@@ -218,19 +218,19 @@ Now, based on the language of the user, you can fetch the proper translation:
 
 ### Fetching String's, Booleans and Numbers
 The API has methods that work identically for these types:
-```
+```swift
 public func string(forKey: String, callback: (CNGError?, String?))
 ```
 
-```
+```swift
 public func bool(forKey: String, callback: (CNGError?, Bool?))
 ```
 
-```
+```swift
 public func double(forKey: String, callback: (CNGError?, Double?))
 ```
 
-```
+```swift
 public func integer(forKey: String, callback: (CNGError?, Int?))
 ```
 
@@ -243,7 +243,7 @@ public func stringArray(forKey: String, callback: (CNGError?, Int?))
 
 and JSON String Dictionaries (`[String:String]`)
 
-```
+```swift
 public func stringDictionary(forKey: String,callback: (CNGError?, Int?))
 ```
 
@@ -279,7 +279,7 @@ struct StoreLandingPage: Decodable {
 ```
 
 Then, fetch the data:
-```
+```swift
 let client = CNGClient.setup(withApiKey: "Dem0apiKEY")
 client.object(forKey: "store_catalog") { (error, value: StoreLandingPage?) -> () in
     if (error != nil) {
